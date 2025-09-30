@@ -150,7 +150,7 @@ function generateTable() {
     for (let i = 1; i <= totalCells; i++) symbols.push(i.toString());
   } else {
     for (let i = 0; i < totalCells; i++) {
-      symbols.push(russianLetters[i % russianLetters.length]);
+      symbols.push(getDisplayValue(i + 1));
     }
   }
 
@@ -158,8 +158,8 @@ function generateTable() {
 
   schulteTable.innerHTML = '';
   schulteTable.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-  schulteTable.classList.remove('center-dot'); 
 
+  schulteTable.classList.remove('center-dot'); 
   const centerIndex = (size % 2 === 1) ? Math.floor(totalCells / 2) : -1;
 
   symbols.forEach((symbol, index) => {
@@ -177,6 +177,9 @@ function generateTable() {
       cell.appendChild(contentSpan);
 
     } else {
+      cell.textContent = symbol;
+    }
+    
 
     cell.addEventListener('click', () => handleCellClick(cell));
     schulteTable.appendChild(cell);
