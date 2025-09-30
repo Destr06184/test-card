@@ -158,15 +158,25 @@ function generateTable() {
 
   schulteTable.innerHTML = '';
   schulteTable.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-  if (currentSettings.showCenterDot && size % 2 === 1) schulteTable.classList.add('center-dot');
-  else schulteTable.classList.remove('center-dot');
+  schulteTable.classList.remove('center-dot'); 
+
+  const centerIndex = (size % 2 === 1) ? Math.floor(totalCells / 2) : -1;
 
   symbols.forEach((symbol, index) => {
     const cell = document.createElement('div');
     cell.className = 'schulte-cell fade-in';
-    cell.textContent = symbol;
     cell.dataset.value = symbol;
     cell.dataset.index = index;
+
+    if (index === centerIndex && currentSettings.showCenterDot) {
+      cell.classList.add('center-cell-with-dot');
+      
+      const contentSpan = document.createElement('span');
+      contentSpan.className = 'cell-content';
+      contentSpan.textContent = symbol;
+      cell.appendChild(contentSpan);
+
+    } else {
 
     cell.addEventListener('click', () => handleCellClick(cell));
     schulteTable.appendChild(cell);
